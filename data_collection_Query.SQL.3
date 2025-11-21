@@ -1,0 +1,24 @@
+WITH author_metrics AS (
+    SELECT 
+        author,
+        COUNT(book_id) AS book_count,
+        SUM(pages) AS total_pages,
+        AVG(rating) AS avg_rating
+    FROM 
+        books_all
+    GROUP BY 
+        author
+    HAVING 
+        COUNT(book_id) > 1
+)
+SELECT 
+    author,
+    book_count,
+    total_pages,
+    avg_rating
+FROM 
+    author_metrics
+WHERE 
+    avg_rating > 4.0
+ORDER BY 
+    total_pages DESC;
